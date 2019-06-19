@@ -1,0 +1,8 @@
+<aura:component controller="BoxContentExplorerController" implements="force:hasSObjectName,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+<aura:attribute name="logoUrl" type="string" default="{!$Resource.logos + '/box-logo.png'}" />
+<ltng:require 
+        styles="{!$Resource.explorer + '/10.1.0/en-US/explorer.css'}"
+        scripts="{!$Resource.explorer + '/10.1.0/en-US/explorer.js'}" 
+        afterScriptsLoaded="{!c.doInit}"/>
+        <div aura:id="explorer-container"> </div>
+</aura:component>	

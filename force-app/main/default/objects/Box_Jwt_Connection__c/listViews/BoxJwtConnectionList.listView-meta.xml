@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BoxJwtConnectionList</fullName>
+    <columns>OBJECT_ID</columns>
+    <columns>NAME</columns>
+    <columns>Connection_Name__c</columns>
+    <columns>Is_Default__c</columns>
+    <columns>Public_Key_ID__c</columns>
+    <columns>Client_ID__c</columns>
+    <columns>Client_Secret__c</columns>
+    <columns>Enterprise_ID__c</columns>
+    <columns>Service_Account_ID__c</columns>
+    <columns>Service_Account_Login__c</columns>
+    <columns>Service_Account_Name__c</columns>
+    <columns>Private_Key__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Box Jwt Connection List</label>
+</ListView>

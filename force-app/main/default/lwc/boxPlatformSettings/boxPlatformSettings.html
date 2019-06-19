@@ -1,0 +1,142 @@
+<template>
+        <lightning-tabset>
+            <lightning-tab label="Box Platform Connections">
+                <template if:false={newConnectionModel}>
+                    <div class="c-container">
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item padding="around-small" size="12">        
+                                <lightning-datatable
+                                    key-field="Id"
+                                    data={boxJwtConnectionList.data}
+                                    columns={jwtDataTableColumns}
+                                    onrowaction={handleRowAction}
+                                    is-loading={tableLoadingState}>
+                                </lightning-datatable>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small" size="12">
+                                <div class="slds-float--right">
+                                    <lightning-button variant="brand" label="New Connection" title="Create New Box JWT Connection" onclick={handleCreate} class="slds-m-left_x-small"></lightning-button>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </template>
+                <template if:true={newConnectionModel}>
+                    <lightning-progress-indicator current-step={progress} type="path" variant="base">
+                        <template for:each={steps} for:item="step">
+                            <lightning-progress-step label={step.label} value={step.value} key={step.label}></lightning-progress-step>
+                        </template>
+                        <div></div>
+                    </lightning-progress-indicator>
+                        <template if:true={isPrereq}>
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item padding="around-small" size="12">
+                                    <div class="slds-m-around_medium">
+                                        <h1 class="slds-text-heading_small">Instructions</h1>
+                                        </br>
+                                        <ul>
+                                            <li>1) In the <a href="https://account.box.com/developers/services">Box Developer Console</a>, create a new <a href="https://developer.box.com/docs/setting-up-a-jwt-app">Box Developer Application</a> with JWT as the authentication type.</li>
+                                            <li>2) In the application configuration, generate a new <a href="https://developer.box.com/docs/setting-up-a-jwt-app#section-step-2-generate-a-public-private-keypair">Public/Private Keypair</a> JSON file.</li>
+                                            <li>3) In the <a href="https://app.box.com/master/settings/custom">Box Admin Console</a>, <a href="https://developer.box.com/docs/setting-up-a-jwt-app#section-step-3-grant-access-for-the-application-in-your-enterprise">authorize</a> your newly created Box Developer Application using the ClientID (also known as the API Key).</li>
+                                            <li>4) Confirm that you have Python and OpenSSL installed on the machine in which you're going to run the Python script in step #5.</li>
+                                            <li>5) Download the following <a href="#">parse_box_config.py</a> python script which will be used to convert the private key format to one that is friendly to Salesforce.</li>
+                                            <li>6) Run the <a href="#">parse_box_config.py</a> python script and pass in the absolute path to your Public/Private Keypair JSON file.</li>
+                                            <pre>./parse_box_config.py /path/to/my/123456_abc123_config.json</pre>
+                                            <li>7) If successful, a new sfdc_box_config.json Public/Private Keypair file will be generated.</li>
+                                            <li>8) Click the Next button and upload the sfdc_box_config.json file. </li>
+                                        </ul>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="12">
+                                    <div class="slds-float--right">
+                                        <lightning-button variant="brand" label="Next" title="Next: Configuration" onclick={handleNextClick} class="slds-m-left_x-small"></lightning-button>
+                                    </div>
+                                    <div class="slds-float--right">
+                                        <lightning-button variant="brand" label="Cancel" title="Cancel" onclick={handleBackClick} class="slds-m-left_x-small"></lightning-button>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </template>
+                        <template if:true={isConfig}>
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item padding="around-small" size="12">
+                                    <div class="slds-m-around_medium">
+                                        <!-- <h1 class="slds-text-heading_small">Box Developer Application JSON</h1> -->
+                                        <!-- <lightning-textarea name="boxAppConfigJson" label="" placeholder="JSON content here..." onchange={handleConfigChange}></lightning-textarea> -->
+                                        <template if:true={fileNotUploaded}>
+                                            <lightning-input id="fileInput" type="file" label="Box Developer Application JSON" accept=".json" onchange={handleConfigChange} required message-when-value-missing="Please upload Box Application JSON config file."></lightning-input>
+                                        </template>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="12">
+                                    <div class="slds-float--right">
+                                        <template if:false={fileNotUploaded}>
+                                            <lightning-button variant="brand" label="Next" title="Next: Review" onclick={handleNextClick} class="slds-m-left_x-small"></lightning-button>
+                                        </template>
+                                    </div>
+                                    <div class="slds-float--right">
+                                        <lightning-button variant="brand" label="Back" title="Back: Pre-Requisites" onclick={handleBackClick} class="slds-m-left_x-small"></lightning-button>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </template>
+                        <template if:true={isReview}>
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item padding="around-small" size="12">
+                                    <div class="slds-m-around_medium">
+                                        <div class="slds-form">
+                                            </br>
+                                            <h1 class="slds-text-heading_small">Box JWT Parameters</h1>
+                                            </br>
+                                            
+                                            <lightning-input label="JWT Connection Name" id="jwtConnectionName" value={jwtConnectionName} onchange={handleNameChange}></lightning-input>
+                                            <lightning-input label="Box Enteprise ID" id="enterpriseID" value={enterpriseID}></lightning-input>
+                                            <lightning-input label="Box Client ID" id="clientID" value={clientID}></lightning-input>
+                                            <lightning-input label="Box Client Secret" id="clientSecret" value={clientSecret}></lightning-input>
+                                            <lightning-input label="Box Public Key ID" id="publicKeyID" value={publicKeyID}></lightning-input>
+                                            <lightning-textarea label="Box Private Key" id="privateKey" value={privateKey}></lightning-textarea>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="12">
+                                    <div class="slds-float--right">
+                                        <lightning-button variant="brand" label="Next" title="Next: Connect" onclick={handleNextClick} class="slds-m-left_x-small"></lightning-button>
+                                    </div>
+                                    <div class="slds-float--right">
+                                        <lightning-button variant="brand" label="Back" title="Back: Configuration" onclick={handleBackClick} class="slds-m-left_x-small"></lightning-button>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </template>
+                        <template if:true={isConnect}>
+                            <lightning-layout multiple-rows="true">
+                                <lightning-layout-item padding="around-small" size="12">
+                                    <div class="slds-m-around_medium">
+                                        <div class="slds-form">
+                                            </br>
+                                            <h1 class="slds-text-heading_small">Box JWT Connection Test</h1>
+                                            </br>
+                                            <template if:true={serviceAccount}>
+                                                <lightning-input label="Box Service Account Name" id="serviceAccountName" value={serviceAccount.name} disabled></lightning-input>
+                                                <lightning-input label="Box Service Account Login" id="serviceAccountLogin" value={serviceAccount.login} disabled></lightning-input>
+                                                <lightning-input label="Box Service Account ID" id="serviceAccountID" value={serviceAccount.id} disabled></lightning-input>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="around-small" size="12">
+                                    <div class="slds-float--right">
+                                        <template if:true={serviceAccount}>
+                                            <lightning-button variant="brand" label="Save" title="Save Connection" onclick={handleSave} class="slds-m-left_x-small"></lightning-button>
+                                        </template>
+                                    </div>
+                                    <div class="slds-float--right">
+                                        <lightning-button variant="brand" label="Back" title="Back: Review" onclick={handleBackClick} class="slds-m-left_x-small"></lightning-button>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </template>
+                </template>
+            </lightning-tab>
+        </lightning-tabset>
+</template>
