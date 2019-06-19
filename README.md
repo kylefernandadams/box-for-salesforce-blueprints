@@ -96,14 +96,14 @@ sfdx force:source:deploy -p force-app -u username@company.com
 
 ![New Connection Created](/images/7-connection-created.png)
 
-8. Enable Communities, create a new community, and add the Box Content Explorer component for a record detail page.
+8. Enable Communities, create a new community, and in the Community App Builder add the Box Content Explorer component for a record detail page.
     > Note: The Box Content Explorer will only render folders for records in which a folder has already been created.
 
 ![Add Box Content Explorer](/images/8-app-builder-add.png)
 
 ![Preview Box Content Explorer](/images/9-app-builder-preview.png)
 
-9. You will most certainly receive CORS errors in the browser console. Go to your application congiration in the Box Developer console and add the appropriate domains found in the browser console error.
+9. You will most certainly receive CORS errors in the browser console. Go to your application configuration in the Box Developer console and add the appropriate domains found in the browser console error.
 
 ![Preview Box Content Explorer](/images/10-box-cors-configuration.png)
 
