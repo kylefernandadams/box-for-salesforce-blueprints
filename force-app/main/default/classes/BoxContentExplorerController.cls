@@ -8,7 +8,7 @@ public with sharing class BoxContentExplorerController {
         BoxConnection box = BoxConnection.getInstance();
         BoxPlatformApiConnection api = box.api;
 
-        // Get or create the folder
+        // Get the record folder
         box__FRUP__c frup = [SELECT box__Folder_ID__c, box__Record_ID__c FROM box__FRUP__c WHERE box__Record_ID__c = :recordId LIMIT 1];
         String folderId = frup.box__Folder_ID__c;
         System.debug('Found folder with id: ' + folderId);

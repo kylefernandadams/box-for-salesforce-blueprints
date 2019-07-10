@@ -126,11 +126,11 @@ sfdx force:source:deploy -p force-app -u username@company.com
 3. Box JWT Connection and Token Exchange Logic
     * [Box Connection Handler](/force-app/main/default/classes/BoxConnection.cls)
 
-4. Record Triggers and Handlers
+4. Standard Object Triggers and Corresponding Apex Handlers
     * [Box App User Creation Trigger for Communities Users](/force-app/main/default/triggers/AppUserCreation.trigger)
     * [Box App User Creation Handler](/force-app/main/default/classes/BoxAppUserHandler.cls)
     * [Box Account Folder Creation Trigger](/force-app/main/default/triggers/AccountFolderCreation.trigger)
-    * [Box Case Folder Creation Trigger](/force-app/main/default/triggers/CaseFolderCreation.trigger)
+    * [Box Case Folder Creation Trigger](/force-app/main/default/triggers/CaseTrigger.trigger#L5)
     * [Box Record Folder Creation Handler](/force-app/main/default/classes/BoxRecordFolderHandler.cls)
 
 5. Box UI Elements
@@ -139,7 +139,17 @@ sfdx force:source:deploy -p force-app -u username@company.com
     * [Box Content Explorer - Static Resources](/force-app/main/default/staticresources/explorer)
     * [Box Content Preview - Static Resources](/force-app/main/default/staticresources/preview)
 
-6. Private Key Conversion Script
+6. Large Batch Processing with Salesforce Platform Events
+    * [Case Update Trigger](/force-app/main/default/triggers/CaseTrigger.trigger#L9)
+    * [Case Closed Event Custom Object](/force-app/main/default/objects/Case_Closed__e)
+    * [Case Closed Event Publisher Apex Class](/force-app/main/default/classes/CaseClosedEventPublisher.cls)
+    * [Case Closed Event Trigger](/force-app/main/default/triggers/CaseClosedEventTrigger.trigger)
+    * [Case Closed Event Subscriber Apex Class](/force-app/main/default/classes/CaseClosedEventSubscriber.cls)
+    * [Here's a quick demo video](https://cloud.box.com/s/pnazifgluovtx1exzuej8r2oebkr8fi3)
+
+![Platform Events Example](/images/11-box-sfdc-platform-events.png)
+
+7. Private Key Conversion Script
     * [parse_box_config.py](/scripts/parse_box_config.py)
 
 ## Disclaimer

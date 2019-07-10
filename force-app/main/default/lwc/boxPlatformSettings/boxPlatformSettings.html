@@ -39,8 +39,8 @@
                                             <li>2) In the application configuration, generate a new <a href="https://developer.box.com/docs/setting-up-a-jwt-app#section-step-2-generate-a-public-private-keypair">Public/Private Keypair</a> JSON file.</li>
                                             <li>3) In the <a href="https://app.box.com/master/settings/custom">Box Admin Console</a>, <a href="https://developer.box.com/docs/setting-up-a-jwt-app#section-step-3-grant-access-for-the-application-in-your-enterprise">authorize</a> your newly created Box Developer Application using the ClientID (also known as the API Key).</li>
                                             <li>4) Confirm that you have Python and OpenSSL installed on the machine in which you're going to run the Python script in step #5.</li>
-                                            <li>5) Download the following <a href="#">parse_box_config.py</a> python script which will be used to convert the private key format to one that is friendly to Salesforce.</li>
-                                            <li>6) Run the <a href="#">parse_box_config.py</a> python script and pass in the absolute path to your Public/Private Keypair JSON file.</li>
+                                            <li>5) Download the following <a href="https://raw.githubusercontent.com/kylefernandadams/box-for-salesforce-blueprints/master/scripts/parse_box_config.py">parse_box_config.py</a> python script which will be used to convert the private key format to one that is friendly to Salesforce.</li>
+                                            <li>6) Run the <a href="https://raw.githubusercontent.com/kylefernandadams/box-for-salesforce-blueprints/master/scripts/parse_box_config.py">parse_box_config.py</a> python script and pass in the absolute path to your Public/Private Keypair JSON file.</li>
                                             <pre>./parse_box_config.py /path/to/my/123456_abc123_config.json</pre>
                                             <li>7) If successful, a new sfdc_box_config.json Public/Private Keypair file will be generated.</li>
                                             <li>8) Click the Next button and upload the sfdc_box_config.json file. </li>
@@ -61,8 +61,6 @@
                             <lightning-layout multiple-rows="true">
                                 <lightning-layout-item padding="around-small" size="12">
                                     <div class="slds-m-around_medium">
-                                        <!-- <h1 class="slds-text-heading_small">Box Developer Application JSON</h1> -->
-                                        <!-- <lightning-textarea name="boxAppConfigJson" label="" placeholder="JSON content here..." onchange={handleConfigChange}></lightning-textarea> -->
                                         <template if:true={fileNotUploaded}>
                                             <lightning-input id="fileInput" type="file" label="Box Developer Application JSON" accept=".json" onchange={handleConfigChange} required message-when-value-missing="Please upload Box Application JSON config file."></lightning-input>
                                         </template>
