@@ -31,6 +31,7 @@
                     contentPreviewProps: {
                         staticPath: previewResource,
                         previewLibraryVersion: '2.12.0',
+                        showAnnotations: true,
                         contentSidebarProps: {
                             detailsSidebarProps: {
                                 hasNotices: true,
@@ -38,7 +39,7 @@
                                 hasAccessStats: true,
                                 hasVersions: true
                             },
-                            hasActivityFeed: false,
+                            hasActivityFeed: true,
                             hasSkills: true,
                             hasMetadata: true
                         },

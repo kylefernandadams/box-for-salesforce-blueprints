@@ -21,7 +21,7 @@ public with sharing class BoxContentExplorerController {
         System.debug('Downscoping resource: ' + resource);
 
         // Exchange the service account access token for a downscoped token that is safer
-        String scopes = 'base_explorer item_preview item_download item_rename item_delete item_share item_upload';
+        String scopes = 'base_explorer item_preview item_download item_rename item_delete item_share item_upload root_readwrite annotation_view_all annotation_edit';
         String downscopedToken = BoxConnection.exchangeToken(accessToken, scopes, resource); 
 
         // Create the map to return to the lightning component
