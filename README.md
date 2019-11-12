@@ -84,7 +84,7 @@ sfdx force:source:deploy -p force-app -u username@company.com
 
 ![Configure Part 2](/images/4b-configure.png)
 
-5. Provide a new JWT Connection Name, review the values that were parsed from the JSON file, then click Next.
+5. Provide a new JWT Connection Name and review the values that were parsed from the JSON file, then click Next.
 
 ![Review](/images/5-review.png)
 
@@ -92,7 +92,7 @@ sfdx force:source:deploy -p force-app -u username@company.com
 
 ![Connection Test](/images/6-service-account-connection-test.png)
 
-7. Confirm the save worked and the new connection is populated in the data table.
+7. Confirm that the save worked and the new connection is populated in the data table.
 
 ![New Connection Created](/images/7-connection-created.png)
 
